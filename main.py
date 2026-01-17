@@ -1,7 +1,11 @@
 from flask import Flask, redirect, url_for, session, render_template, request
 from flask_session import Session
 from authlib.integrations.flask_client import OAuth
+from dotenv import load_dotenv
 import os
+
+# load data from .env file
+load_dotenv()
 
 # create flask app
 app = Flask(__name__)
