@@ -20,10 +20,10 @@ Session(app)  # initialize flask-session
 # ROUTES =============================================
 @app.route("/")
 def landing():
-    return redirect(url_for("login"))
+    return redirect(url_for("signin"))
 
-@app.route("/login", methods=['GET', 'POST'])
-def login():
+@app.route("/signin", methods=['GET', 'POST'])
+def signin():
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
