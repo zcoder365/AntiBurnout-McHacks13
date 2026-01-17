@@ -37,7 +37,8 @@ def landing():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    return auth0.authorize_redirect(redirect_uri=f'{BASE_URL}/callback')
+    # return auth0.authorize_redirect(redirect_uri=f'{BASE_URL}/callback')
+    return redirect(url_for("home"))
 
 # @app.route("/signup", methods=['GET', 'POST'])
 # def signup():
@@ -66,15 +67,16 @@ def logout():
 
 @app.route("/home")
 def home():
-    if 'user' not in session:
-        return redirect(url_for('login'))
+    # if 'user' not in session:
+    #     return redirect(url_for('login'))
 
-    user = session['user']
-    return f"Welcome {user['name']} ({user['email']})! Your burnout dashboard goes here."
+    # user = session['user']
+    # return f"Welcome {user['name']} ({user['email']})! Your burnout dashboard goes here."
+    return render_template("home.html")
 
-@app.route("/track")
+@app.route("/track", methods=['GET', 'POST'])
 def track():
-    pass
+    return render_template("track.html")
 
 if __name__ == "__main__":
     app.run(debug=True, port=5002)
