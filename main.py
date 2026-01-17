@@ -49,13 +49,15 @@ def callback():
     token = auth0.authorize_access_token()
     user = auth0.parse_id_token(token)
     
-    # store the user in session
+    # just store in session for now
     session['user'] = {
-        'id': user['sub'],    # unique auth0 id
+        'auth0_id': user['sub'],
         'email': user['email'],
         'name': user.get('name', '')
+        # TODO: add database integration once team decides on structure
     }
-    return redirect(url_for('dashboard'))
+    
+    return redirect(url_for('home'))
 
 @app.route('/logout')
 def logout():
