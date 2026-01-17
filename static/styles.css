@@ -24,6 +24,12 @@ form {
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px; /* Set a fixed width */
+    height: auto; /* Adjust height automatically */
+    margin: 50px auto; /* Center the form horizontally and add vertical margin */
+    display: flex; /* Use flexbox for centering */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center children horizontally */
 }
 
 input[type="text"], input[type="email"], input[type="password"] {
