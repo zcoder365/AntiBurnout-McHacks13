@@ -26,11 +26,11 @@ def landing():
 def signin():
     if request.method == "POST":
         email = request.form.get("email")
-        password = request.form.get("password")
+        raw_pw = request.form.get("password")
         
-        # encrypt password
+        pw = "" # encrypt raw_pw
         
-        # store in database
+        # verify user doesn't exist + store in database
         
         return redirect(url_for("home"))
     
