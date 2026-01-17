@@ -26,7 +26,7 @@ def landing():
 def signin():
     if request.method == "POST":
         email = request.form.get("email")
-        raw_pw = request.form.get("password")
+        pw = request.form.get("password")
         
         # verify user + log them in (set the session to them)
         
