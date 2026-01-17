@@ -54,9 +54,7 @@ def signup():
 def logout():
     session.clear()
     
-    return redirect(
-        f"https://{os.environ['AUTH0_DOMAIN']}/v2/logout?returnTo={BASE_URL}"
-    )
+    return redirect(url_for("login"))
 
 @app.route("/home")
 def home():
