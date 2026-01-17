@@ -17,19 +17,6 @@ app.config['SECRET_KEY'] = 'secret'
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)  # initialize flask-session
 
-# ⚡ auth0 setup ======================================
-# pulled from Zoe's Auth0 account
-oauth = OAuth(app)
-auth0 = oauth.register(
-    'auth0',
-    client_id=os.environ['AUTH0_CLIENT_ID'],
-    client_secret=os.environ['AUTH0_SECRET_ID'],
-    api_base_url=f"https://{os.environ['AUTH0_DOMAIN']}",
-    access_token_url=f"https://{os.environ['AUTH0_DOMAIN']}/oauth/token",
-    authorize_url=f"https://{os.environ['AUTH0_DOMAIN']}/authorize",
-    client_kwargs={'scope': 'openid profile email'},
-)
-
 # ROUTES =============================================
 @app.route("/")
 def landing():
@@ -37,8 +24,17 @@ def landing():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    return auth0.authorize_redirect(redirect_uri=f'{BASE_URL}/callback')
-    # return redirect(url_for("home"))
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        
+        # encrypt password
+        
+        # store in database
+        
+        return redirect(url_for("home"))
+    
+    return render_template("login.html")
 
 # @app.route("/signup", methods=['GET', 'POST'])
 # def signup():
@@ -53,9 +49,12 @@ def callback():
     auth0_id = user['sub']
     email = user['email']
     name = user.get('name', '')
+    password = user['password']
+    
+    print("Collected data:", user, email)
     
     # 🆕 save to database (add this)
-    db_user_id = get_or_create_user(auth0_id, email, name)
+    db_user_id = get_or_create_user(auth0_id, email)
     
     # store in session (update this)
     session['user'] = {
