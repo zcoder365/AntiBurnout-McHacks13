@@ -3,6 +3,7 @@ from flask_session import Session
 from datetime import datetime
 from dotenv import load_dotenv
 import os
+import model as model
 
 BASE_URL = "http://localhost:5002"
 
@@ -74,6 +75,9 @@ def track():
         last_meal = datetime.fromisoformat(last_meal_raw).strftime("%Y-%m-%d %H:%M:%S")
         
         # save to database
+        
+        # call count_meal()
+        num_meals = model.count_meals(session['user']['email'])
         
         return redirect(url_for("home"))
     
