@@ -32,9 +32,9 @@ def landing():
 def login():
     return auth0.authorize_redirect(redirect_uri='http://localhost:5000/callback')
 
-@app.route("/signup", methods=['GET', 'POST'])
-def signup():
-    return ""
+# @app.route("/signup", methods=['GET', 'POST'])
+# def signup():
+#     return ""
 
 @app.route("/callback")
 def callback():
