@@ -32,7 +32,7 @@ def signin():
         
         return redirect(url_for("home"))
     
-    return render_template("login.html")
+    return render_template("signin.html")
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
