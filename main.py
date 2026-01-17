@@ -28,9 +28,7 @@ def signin():
         email = request.form.get("email")
         raw_pw = request.form.get("password")
         
-        pw = "" # encrypt raw_pw
-        
-        # verify user doesn't exist + store in database
+        # verify user + log them in (set the session to them)
         
         return redirect(url_for("home"))
     
@@ -40,9 +38,9 @@ def signin():
 def signup():
     if request.method == "POST":
         email = request.form.get("email")
-        password = request.form.get("password")
+        raw_pw = request.form.get("password")
         
-        # encrypt password
+        pw = "" # encrypt password
         
         # save user to database
         
