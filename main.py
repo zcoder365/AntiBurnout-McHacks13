@@ -64,3 +64,6 @@ def home():
 
     user = session['user']
     return f"Welcome {user['name']} ({user['email']})! Your burnout dashboard goes here."
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5002)
