@@ -69,11 +69,10 @@ def logout():
 
 @app.route("/home")
 def home():
-    # if 'user' not in session:
-    #     return redirect(url_for('login'))
+    if 'user' not in session:
+        return redirect(url_for('login'))
 
-    # user = session['user']
-    # return f"Welcome {user['name']} ({user['email']})! Your burnout dashboard goes here."
+    user = session['user']
     return render_template("home.html")
 
 @app.route("/track", methods=['GET', 'POST'])
