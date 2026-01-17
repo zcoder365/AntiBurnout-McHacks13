@@ -12,11 +12,12 @@ app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)  # initialize flask-session
 
 # ⚡ auth0 setup ======================================
+# pulled from Zoe's Auth0 account
 oauth = OAuth(app)
 auth0 = oauth.register(
     'auth0',
     client_id=os.environ['AUTH0_CLIENT_ID'],
-    client_secret=os.environ['AUTH0_CLIENT_SECRET'],
+    client_secret=os.environ['AUTH0_SECRET_ID'],
     api_base_url=f"https://{os.environ['AUTH0_DOMAIN']}",
     access_token_url=f"https://{os.environ['AUTH0_DOMAIN']}/oauth/token",
     authorize_url=f"https://{os.environ['AUTH0_DOMAIN']}/authorize",
