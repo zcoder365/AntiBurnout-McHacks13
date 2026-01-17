@@ -1,2 +1,2 @@
-# McMentors
-A mentor/mentee pairing web app
+# Anti-Burnout App
+A way to detect burnout before it happens.
