@@ -4,6 +4,8 @@ from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
 import os
 
+BASE_URL = "http://localhost:5002"
+
 # load data from .env file
 load_dotenv()
 
@@ -35,7 +37,7 @@ def landing():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    return auth0.authorize_redirect(redirect_uri='http://localhost:5000/callback')
+    return auth0.authorize_redirect(redirect_uri=f'{BASE_URL}/callback')
 
 # @app.route("/signup", methods=['GET', 'POST'])
 # def signup():
@@ -59,7 +61,7 @@ def logout():
     session.clear()
     
     return redirect(
-        f"https://{os.environ['AUTH0_DOMAIN']}/v2/logout?returnTo=http://localhost:5000"
+        f"https://{os.environ['AUTH0_DOMAIN']}/v2/logout?returnTo={BASE_URL}"
     )
 
 @app.route("/home")
@@ -69,6 +71,10 @@ def home():
 
     user = session['user']
     return f"Welcome {user['name']} ({user['email']})! Your burnout dashboard goes here."
+
+@app.route("/track")
+def track():
+    pass
 
 if __name__ == "__main__":
     app.run(debug=True, port=5002)
