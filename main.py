@@ -1,6 +1,6 @@
 from flask import Flask, redirect, url_for, session, render_template, request
 from flask_session import Session
-from authlib.integrations.flask_client import OAuth
+from datetime import datetime
 from dotenv import load_dotenv
 import os
 
@@ -66,6 +66,19 @@ def home():
 
 @app.route("/track", methods=['GET', 'POST'])
 def track():
+    if request.method == "POST":
+        sleep = request.form.get("sleep")
+        mood = request.form.get("mood")
+        physical_activity = request.form.get("physical-activity")
+        water_intake = request.form.get("water")
+        caffeine_intake = request.form.get("caffeine")
+        last_meal_raw = request.form.get("last_meal")
+        last_meal = datetime.fromisoformat(last_meal_raw).strftime("%Y-%m-%d %H:%M:%S")
+        
+        # save to database
+        
+        return redirect(url_for("home"))
+    
     return render_template("track.html")
 
 if __name__ == "__main__":
