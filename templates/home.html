@@ -1,7 +1,5 @@
-{% extend "base.html" %}
+{% extends "base.html" %}
 {% block content %}
-
-<h2>Welcome back, {{user.name}}!</h2>
 
 {% if score %}
 <div class="results-div">
@@ -18,7 +16,7 @@
 {% else %}
 <div class="no-results">
     <p>You have no results.</p>
-    <a href="/add-data"><button>Add data</button></a>
+    <a href="/track"><button>Add data</button></a>
 </div>
 {% endif %}
 
