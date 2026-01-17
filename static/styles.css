@@ -1,2 +1,40 @@
 /* dark grey, navy, light blue, red */
 /* more stable = light blue; more burnout = red */
+
+:root {
+    --primary-blue: #87CEEB;
+    --primary-red: #DC143C;
+    --dark-grey: #2C3E50;
+    --navy: #1A3A52;
+    --light-blue: #B0E0E6;
+    --muted-red: #C85A54;
+    --background: #F5F7FA;
+    --text-dark: #2C3E50;
+}
+
+body {
+    color: var(--text-dark);
+    background-color: var(--background);
+}
+
+.stable {
+    color: var(--primary-blue);
+}
+
+.burnout {
+    color: var(--primary-red);
+}
+
+.burnout-gradient {
+    background: linear-gradient(90deg, var(--primary-blue) 0%, var(--light-blue) 25%, var(--muted-red) 75%, var(--primary-red) 100%);
+    height: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.burnout-indicator {
+    background: linear-gradient(90deg, var(--primary-blue) 0%, var(--light-blue) 25%, var(--muted-red) 75%, var(--primary-red) 100%);
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
