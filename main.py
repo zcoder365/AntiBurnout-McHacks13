@@ -49,12 +49,20 @@ def callback():
     token = auth0.authorize_access_token()
     user = auth0.parse_id_token(token)
     
-    # just store in session for now
+    # extract user info
+    auth0_id = user['sub']
+    email = user['email']
+    name = user.get('name', '')
+    
+    # 🆕 save to database (add this)
+    db_user_id = get_or_create_user(auth0_id, email, name)
+    
+    # store in session (update this)
     session['user'] = {
-        'auth0_id': user['sub'],
-        'email': user['email'],
-        'name': user.get('name', '')
-        # TODO: add database integration once team decides on structure
+        'auth0_id': auth0_id,
+        'db_id': db_user_id,  # 🆕 add database id
+        'email': email,
+        'name': name
     }
     
     return redirect(url_for('home'))
