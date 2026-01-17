@@ -37,8 +37,8 @@ def landing():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    # return auth0.authorize_redirect(redirect_uri=f'{BASE_URL}/callback')
-    return redirect(url_for("home"))
+    return auth0.authorize_redirect(redirect_uri=f'{BASE_URL}/callback')
+    # return redirect(url_for("home"))
 
 # @app.route("/signup", methods=['GET', 'POST'])
 # def signup():
