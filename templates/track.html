@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form action="/track">
+    <label for="sleep">How much sleep did you get since you last logged in?</label>
+    <select name="sleep" id="select">
+        <option value="0-4">0-4 hours</option>
+        <option value="5-7">5-7 hours</option>
+        <option value="8-10">8-10 hours</option>
+        <option value="10+">10+ hours</option>
+    </select>
+
+    <br>
+
+    <label for="mood">What's your mood?</label>
+    <select name="mood" id="mood">
+        <option value="motivated">Motivated</option>
+        <option value="energetic">Energetic</option>
+        <option value="meh">Meh</option>
+        <option value="tired">Tired</option>
+        <option value="anxious">Anxious</option>
+    </select>
+
+    <br>
+
+    <label for="physical-activity">Did you get physical activity today? (e.g., walking, running, gym time, etc.)</label>
+    <input type="checkbox" id="physical-activity" name="physical-activity" value="yes">
+    <input type="hidden" name="physical-activity" value="no">
+
+    <br>
+
+    <label for="water">How much water did you have to drink today?</label>
+    <input type="number" id="water" name="number" step="0.5" placeholder="e.g., 1.5">
+
+    <br>
+
+    <label for="caffeine">How much caffeine have you had?</label>
+    <input type="number" id="caffeine" name="caffeine" step="0.5" placeholder="e.g., 0.5">
+
+    <br>
+
+    <label for="meals">How many full meals did you have today?</label>
+    <input type="number" id="meal" name="meal" step="1">
+
+    <br>
+
+    <input type="submit" value="Track">
+</form>
+
+{% endblock %}
