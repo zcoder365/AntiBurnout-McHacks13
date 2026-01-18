@@ -61,6 +61,25 @@ nav button:hover {
     box-shadow: var(--shadow-md);
 }
 
+.navbar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+}
+
+.nav-logo {
+    position: absolute;
+    left: 20px;
+    height: 40px;
+}
+
+.nav-center {
+    display: flex;
+    gap: 16px;
+}
+
 /* form styling */
 form {
     background-color: var(--white);
