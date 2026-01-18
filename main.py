@@ -142,6 +142,7 @@ def track():
         db.add_daily_input(user_id, sleep, mood, physical_activity, water_intake, caffeine_intake, last_meal, datetime.now())
         session['user']['feedback'] = feedback
         session['user']['burnout_score'] = burnout_rate
+        session['user']['category'] = category
         
         # redirect with score to pass into html 
         return redirect(url_for("home"))
