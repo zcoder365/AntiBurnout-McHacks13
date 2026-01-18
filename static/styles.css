@@ -82,3 +82,8 @@ button:hover, input[type="submit"]:hover {
     border-radius: 10px;
     transition: width 0.3s ease;
 }
+
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+}
