@@ -16,24 +16,5 @@
         </nav>
         
         {% block content %}{% endblock %}
-
-        <script>
-            function changeBackground(value) {
-                // define your start and end colors (in RGB)
-                const blueRGB = { r: 135, g: 206, b: 235 };  // #87CEEB
-                const redRGB = { r: 220, g: 20, b: 60 };     // #DC143C
-                
-                // calculate the percentage (0 to 1)
-                const percentage = value / 100;
-                
-                // interpolate each color channel
-                const r = Math.round(blueRGB.r + (redRGB.r - blueRGB.r) * percentage);
-                const g = Math.round(blueRGB.g + (redRGB.g - blueRGB.g) * percentage);
-                const b = Math.round(blueRGB.b + (redRGB.b - blueRGB.b) * percentage);
-                
-                // apply the interpolated color to the background
-                document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-            }
-        </script>
     </body>
 </html>
