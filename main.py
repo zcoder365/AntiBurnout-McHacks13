@@ -88,11 +88,15 @@ def home():
         return redirect(url_for('signin'))
     
     # get score from database
-    user_email = session['user']['email']
-    user_data = db.user_by_email(user_email)
-    user_score = user_data['score']
+    user = session['user']
+    email = user['email']
+    score = user['burnout_score']
+    feedback = user['feedback']
     
-    return render_template("home.html", score=user_score)
+    if feedback == None:
+        feedback = ""
+    
+    return render_template("home.html", score=score, feedback=feedback)
 
 @app.route("/track", methods=['GET', 'POST'])
 def track():
