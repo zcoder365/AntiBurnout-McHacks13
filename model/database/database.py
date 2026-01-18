@@ -78,19 +78,24 @@ def add_daily_input(
 
 # Find the number of meals logged by a user today
 def find_meals(user_id):
+    # connect to the sqlite database
     conn = sqlite3.connect("burnout.db")
-    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-
-    # Count today's meals
+    
+    # count today's meals by checking if last_meal date matches today's date
     cursor.execute("""
         SELECT COUNT(*) as today_count
         FROM daily_inputs
         WHERE user_id = ? AND DATE(last_meal) = DATE('now')     
     """, (user_id,))
+    
+    # fetch the result from the query
     result = cursor.fetchone()
     conn.close()
-    return result["today_count"] if result else 0
+    
+    # result is a tuple, so access the first element (index 0)
+    # if no result exists, default to 0
+    return int(result[0]) if result else 0
 
 
 
