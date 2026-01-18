@@ -1,22 +1,30 @@
-{% extends "base.html" %}
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>McBurn</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="McBurn - Anti-Burnout Application">
+        <link rel="stylesheet" href="/static/styles.css">
+    </head>
 
-<form action="/signup" method="post">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
+    <body align="center">
+        <form action="/signup" method="post">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
 
-    <br>
+            <br>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
 
-    <br>
+            <br>
 
-    <input type="submit" value="Sign Up">
+            <input type="submit" value="Sign Up">
 
-    <br>
+            <br>
 
-    <p>Have an account? <a href="/signin">Sign in.</a></p>
-</form>
-
-{% endblock %}
+            <p>Have an account? <a href="/signin">Sign in.</a></p>
+        </form>
+    </body>
+</html>
