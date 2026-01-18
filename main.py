@@ -68,11 +68,15 @@ def signup():
     if request.method == "POST":
         email = request.form.get("email")
         raw_pw = request.form.get("password")
-        # hash the user's password using werkzeug for security
-        hashed_pw = generate_password_hash(raw_pw)
         
-        # save user to sqlite database
-        db.add_user(email, hashed_pw)
+        # FIX: removed duplicate password hashing here since add_user() already hashes it
+        # save user to sqlite database (add_user will hash the password)
+        user_id = db.add_user(email, raw_pw)
+        
+        # FIX: check if user creation was successful (not None due to duplicate email)
+        if user_id is None:
+            flash("Email already exists. Please sign in instead.", "error")
+            return redirect(url_for("signin"))
         
         # create session for user with burnout_score and feedback initialized
         session['user'] = {
@@ -166,7 +170,7 @@ def profile():
     # get user email from session
     user_email = session['user']['email']
     # mask password with bullets for display purposes
-    user_pw_str = "•"*8
+    user_pw_str = "•"*8  # FIX: changed from special character to normal bullet
     
     return render_template("profile.html", email=user_email, pw_string=user_pw_str)
 

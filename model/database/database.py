@@ -3,9 +3,15 @@ from werkzeug.security import generate_password_hash
 
 # Add a new user to the database
 def add_user(email, password):
+    """
+    adds a new user to the database with hashed password
+    returns user_id if successful, None if email already exists
+    """
     conn = sqlite3.connect("burnout.db")
     cursor = conn.cursor()
-    # Hash the password for security
+    
+    # FIX: removed duplicate hashing - password should be passed in raw, 
+    # and we hash it here (not double-hashed)
     hashed_pwd = generate_password_hash(password)
     
     try:
@@ -26,6 +32,10 @@ def add_user(email, password):
 
 # Retrieve a user by email
 def user_by_email(email):
+    """
+    fetches user record from database by email
+    returns dict with user data if found, None if not found
+    """
     conn = sqlite3.connect("burnout.db")
     conn.row_factory = sqlite3.Row  # allows dict-like access to columns
     cursor = conn.cursor()
@@ -59,6 +69,10 @@ def add_daily_input(
     score,
     created_at
 ):
+    """
+    saves user's daily tracking data to the database
+    uses user_email as foreign key to link to users table
+    """
     conn = sqlite3.connect("burnout.db")
     cursor = conn.cursor()
     
@@ -85,6 +99,10 @@ def add_daily_input(
 
 # Find the number of meals logged by a user today
 def find_meals(user_email):
+    """
+    counts how many meals the user has logged today
+    returns integer count of today's meals
+    """
     # connect to the sqlite database
     conn = sqlite3.connect("burnout.db")
     cursor = conn.cursor()
