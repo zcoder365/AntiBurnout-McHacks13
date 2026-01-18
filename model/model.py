@@ -1,4 +1,4 @@
-import bcrypt
+from werkzeug.security import check_password_hash
 import model.database.database as db
 
 def verify_user(email, password):
@@ -6,8 +6,8 @@ def verify_user(email, password):
     user = db.user_by_email(email)
     user_saved_pw = user['password_hash']
     
-    # check their password
-    if bcrypt.checkpw(password.encode('utf-8'), user_saved_pw.encode('utf-8')):
+    # check their password using werkzeug
+    if check_password_hash(user_saved_pw, password):
         return True
     else:
         return False
