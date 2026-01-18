@@ -26,6 +26,7 @@ def init_db():
         cups_water FLOAT,
         cups_caffeine FLOAT,
         last_meal TIMESTAMP,
+        score FLOAT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
 
