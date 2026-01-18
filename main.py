@@ -28,7 +28,7 @@ Session(app)  # initialize flask-session
 # ROUTES =============================================
 @app.route("/")
 def landing():
-    return redirect(url_for("login"))
+    return redirect(url_for("signin"))
 
 @app.route("/signin", methods=['GET', 'POST'])
 def signin():
@@ -130,4 +130,5 @@ def track():
     return render_template("track.html")
 
 if __name__ == "__main__":
+    # init_db.init_db()
     app.run(debug=True, port=5002)
