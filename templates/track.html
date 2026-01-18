@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<form action="/track">
+<form action="/track" method="post">
     <label for="sleep">How much sleep did you get since you last logged in?</label>
     <select name="sleep" id="select">
         <option value="0-4">0-4 hours</option>
@@ -30,7 +30,7 @@
     <br>
 
     <label for="water">How much water did you have to drink today?</label>
-    <input type="number" id="water" name="number" step="0.5" placeholder="e.g., 1.5">
+    <input type="number" id="water" name="water" step="0.5" placeholder="e.g., 1.5">
 
     <br>
 

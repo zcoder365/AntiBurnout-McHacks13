@@ -126,9 +126,9 @@ def compute_burnout_rate(
 
 def burnout_category(burnout_percentage: int) -> str:
 
-  if burnout_category <= 30:
+  if burnout_percentage <= 30:
     return "Less chances of burnout"
-  elif burnout_category <= 60:
+  elif burnout_percentage <= 60:
     return "Moderate chances of burnout"
   else:
     return "High chances of burnout"

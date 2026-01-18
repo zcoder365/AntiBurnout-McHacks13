@@ -109,16 +109,19 @@ def home():
 @app.route("/track", methods=['GET', 'POST'])
 def track():
     if request.method == "POST":
-        sleep = request.form.get("sleep")
-        mood = request.form.get("mood")
-        physical_activity = request.form.get("physical-activity")
-        water_intake = request.form.get("water")
-        caffeine_intake = request.form.get("caffeine")
-        last_meal_raw = request.form.get("last_meal")
+        sleep = request.form["sleep"]
+        mood = request.form["mood"]
+        physical_activity = request.form["physical-activity"]
+        water_intake = float(request.form["water"])
+        caffeine_intake = float(request.form["caffeine"])
+        last_meal_raw = request.form["last_meal"]
         last_meal = datetime.fromisoformat(last_meal_raw).strftime("%Y-%m-%d %H:%M:%S")
         
-        # call count_meal()
-        num_meals = model.count_meals(session['user']['email'])
+        # count meals
+        email = session['user']['email']
+        user = db.user_by_email(email)
+        user_id = user[1]
+        num_meals = db.find_meals(user_id)
         
         # get user ID
         user_id = db.user_by_email(session['user']['email'])
@@ -139,7 +142,7 @@ def track():
         feedback = fb.generate_feedback(data, burnout_rate)
         
         # save to database/session
-        db.add_daily_input(user_id, sleep, mood, physical_activity, water_intake, caffeine_intake, last_meal, datetime.now())
+        db.add_daily_input(user_id, sleep, mood, physical_activity, water_intake, caffeine_intake, last_meal, burnout_rate, datetime.today())
         session['user']['feedback'] = feedback
         session['user']['burnout_score'] = burnout_rate
         session['user']['category'] = category
@@ -157,5 +160,5 @@ def profile():
     return render_template("profile.html", email=user_email, pw_string=user_pw_str)
 
 if __name__ == "__main__":
-    # init_db.init_db()
+    init_db.init_db()
     app.run(debug=True, port=5002)
