@@ -117,16 +117,21 @@ def track():
         last_meal_raw = request.form["last_meal"]
         last_meal = datetime.fromisoformat(last_meal_raw).strftime("%Y-%m-%d %H:%M:%S")
         
-        # count meals
+        # get user info from database using email
         email = session['user']['email']
-        user = db.user_by_email(email)
-        user_id = user[1]
+        user = db.user_by_email(email)  # returns a dict or None
+        
+        # check if user exists in database
+        if not user:
+            flash("User not found", "error")
+            return redirect(url_for("signin"))
+        
+        user_id = user["user_id"]  # now safe to access since we checked above
+        
+        # count how many meals the user has logged today
         num_meals = db.find_meals(user_id)
         
-        # get user ID
-        user_id = db.user_by_email(session['user']['email'])
-        
-        # set data to dictionary
+        # set data to dictionary for feedback generation
         data = {
             "sleep_range": sleep,
             "user_mood": mood,
@@ -136,7 +141,7 @@ def track():
             "meals_taken": num_meals
         }
         
-        # pass to score/feedback file to get score
+        # calculate burnout score and category based on user inputs
         burnout_rate = bs.compute_burnout_rate(sleep, mood, physical_activity, water_intake, caffeine_intake, num_meals)
         category = bs.burnout_category(burnout_rate)
         feedback = fb.generate_feedback(data, burnout_rate)
