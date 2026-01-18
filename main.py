@@ -5,6 +5,12 @@ from dotenv import load_dotenv
 import os
 import model.model as model
 
+# import other files from subfolders/modules
+import model.database.init_db as init_db
+import model.database.database as db
+import model.feedback.burnout_score as bs
+import model.feedback.feedback as fb
+
 BASE_URL = "http://localhost:5002"
 
 # load data from .env file
