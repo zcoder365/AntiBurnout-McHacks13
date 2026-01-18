@@ -95,6 +95,8 @@ def home():
     
     if feedback == None:
         feedback = ""
+    if score == None:
+        score = 0
     
     return render_template("home.html", score=score, feedback=feedback)
 
@@ -130,5 +132,5 @@ def track():
     return render_template("track.html")
 
 if __name__ == "__main__":
-    # init_db.init_db()
+    init_db.init_db()
     app.run(debug=True, port=5002)
