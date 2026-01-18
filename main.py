@@ -4,9 +4,9 @@ from datetime import datetime
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash
 import os
-import model.model as model
 
 # import other files from subfolders/modules
+import model.model as model
 import model.database.init_db as init_db
 import model.database.database as db
 import model.feedback.burnout_score as bs
