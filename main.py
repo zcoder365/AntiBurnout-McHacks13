@@ -47,7 +47,8 @@ def signin():
             session['user'] = {
                 'email': email,
                 'burnout_score': 0,
-                'feedback': ""
+                'feedback': "",
+                "category": ""
             }
         
             # redirect user to home page
@@ -77,7 +78,8 @@ def signup():
         session['user'] = {
             'email': email,
             'burnout_score': 0,
-            'feedback': ""
+            'feedback': "",
+            "category": ""
         }
         
         return redirect(url_for("home"))
@@ -100,8 +102,9 @@ def home():
     email = user['email']
     score = user.get('burnout_score', 0)  # default to 0 if not found
     feedback = user.get('feedback', "")    # default to empty string if not found
+    category = user.get("category", "")
     
-    return render_template("home.html", score=score, feedback=feedback)
+    return render_template("home.html", score=score, feedback=feedback, category=category)
 
 @app.route("/track", methods=['GET', 'POST'])
 def track():
@@ -120,9 +123,20 @@ def track():
         # get user ID
         user_id = db.user_by_email(session['user']['email'])
         
+        # set data to dictionary
+        data = {
+            "sleep_range": sleep,
+            "user_mood": mood,
+            "physical_activity": physical_activity,
+            "water_intake": water_intake,
+            "caffeine_amount": caffeine_intake,
+            "meals_taken": num_meals
+        }
+        
         # pass to score/feedback file to get score
         burnout_rate = bs.compute_burnout_rate(sleep, mood, physical_activity, water_intake, caffeine_intake, num_meals)
-        feedback = bs.burnout_category(burnout_rate)
+        category = bs.burnout_category(burnout_rate)
+        feedback = fb.generate_feedback(data, burnout_rate)
         
         # save to database/session
         db.add_daily_input(user_id, sleep, mood, physical_activity, water_intake, caffeine_intake, last_meal, datetime.now())
