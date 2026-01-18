@@ -12,6 +12,13 @@
         <h3>Feedback:</h3>
         <p>{{feedback}}</p>
     </div>
+
+    {% if score >= 60 %}
+    <div class="wellness-links">
+        <a href="https://www.mcgill.ca/wellness-hub/#:~:text=Student%20Wellness%20Hub%20Events" target="_blank">Wellness Hub Events</a>
+        <a href="https://recreation.mcgill.ca/stressbusters#:~:text=Free%20Week%20Schedule" target="_blank">McGill Stress Busters Schedule</a>
+    </div>
+    {% endif %}
 </div>
 {% else %}
 <div class="no-results">
