@@ -142,5 +142,5 @@ def profile():
     return render_template("profile.html", email=user_email, pw_string=user_pw_str)
 
 if __name__ == "__main__":
-    init_db.init_db()
+    # init_db.init_db()
     app.run(debug=True, port=5002)
