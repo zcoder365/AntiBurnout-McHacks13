@@ -21,7 +21,7 @@ Session(app)  # initialize flask-session
 # ROUTES =============================================
 @app.route("/")
 def landing():
-    return redirect(url_for("home"))
+    return redirect(url_for("login"))
 
 @app.route("/signin", methods=['GET', 'POST'])
 def signin():
@@ -63,8 +63,8 @@ def logout():
 
 @app.route("/home")
 def home():
-    # if 'user' not in session:
-    #     return redirect(url_for('signin'))
+    if 'user' not in session:
+        return redirect(url_for('signin'))
     
     # get score from database
     
