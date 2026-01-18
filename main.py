@@ -66,7 +66,7 @@ def home():
     if 'user' not in session:
         return redirect(url_for('signin'))
     
-    # get score somehow... after tracking...
+    # get score from database
     
     return render_template("home.html")
 
