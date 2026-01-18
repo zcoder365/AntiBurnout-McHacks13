@@ -62,18 +62,4 @@ def generate_feedback(data, burnout_percentage):
     )
     return response.choices[0].message.content
 
-if __name__ == "__main__":
-    sample_user = {
-        "sleep_range": "5-7",
-        "user_mood": "tired",
-        "physical_activity": "no",
-        "water_intake": 3,
-        "caffeine_amount": 4,
-        "meals_taken": 1,
-    }
-
-    text = generate_feedback(sample_user, burnout_percentage=65)
-    print(text)
-
-
 
