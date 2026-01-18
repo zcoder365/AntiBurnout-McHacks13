@@ -4,7 +4,7 @@ import model.database.database as db
 def verify_user(email, password):
     # find user in database
     user = db.user_by_email(email)
-    user_saved_pw = user['password']
+    user_saved_pw = user['password_hash']
     
     # check their password
     if bcrypt.checkpw(password.encode('utf-8'), user_saved_pw.encode('utf-8')):
