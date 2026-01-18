@@ -48,6 +48,7 @@ def signin():
         
             # redirect user to home page
             return redirect(url_for("home"))
+        
         else:
             # flash error message
             flash("Email or password incorrect", "error")
@@ -107,9 +108,17 @@ def track():
         # call count_meal()
         num_meals = model.count_meals(session['user']['email'])
         
-        # pass to score/feedback file
+        # get user ID
+        user_id = db.user_by_email(session['user']['email'])
         
-        # save to database
+        # pass to score/feedback file to get score
+        burnout_rate = bs.compute_burnout_rate(sleep, mood, physical_activity, water_intake, caffeine_intake, num_meals)
+        feedback = bs.burnout_category(burnout_rate)
+        
+        # save to database/session
+        db.add_daily_input(user_id, sleep, mood, physical_activity, water_intake, caffeine_intake, last_meal, datetime.now())
+        session['user']['feedback'] = feedback
+        session['user']['burnout_score'] = burnout_rate
         
         # redirect with score to pass into html 
         return redirect(url_for("home"))
