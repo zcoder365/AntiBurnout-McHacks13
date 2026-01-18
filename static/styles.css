@@ -42,8 +42,8 @@ input[type="text"], input[type="email"], input[type="password"] {
     text-align: center;
 }
 
-input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
-    border-color: var(--primary-blue);
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+    border-color: var(--light-blue);
     outline: none;
 }
 
