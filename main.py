@@ -84,6 +84,8 @@ def home():
     
     # get score from database
     
+    # get feedback from database
+    
     return render_template("home.html")
 
 @app.route("/track", methods=['GET', 'POST'])
