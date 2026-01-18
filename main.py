@@ -2,6 +2,7 @@ from flask import Flask, redirect, url_for, session, render_template, request, f
 from flask_session import Session
 from datetime import datetime
 from dotenv import load_dotenv
+import bcrypt
 import os
 import model.model as model
 
@@ -61,8 +62,11 @@ def signup():
     if request.method == "POST":
         email = request.form.get("email")
         raw_pw = request.form.get("password")
+        # hash the user's password
+        hashed_pw = bcrypt.hashpw(raw_pw.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         
         # save user to database
+        db.add_user(email, hashed_pw)
         
         # create session for user
         session['user'] = {'email': email}
@@ -83,10 +87,11 @@ def home():
         return redirect(url_for('signin'))
     
     # get score from database
+    user_email = session['user']['email']
+    user_data = db.user_by_email(user_email)
+    user_score = user_data['score']
     
-    # get feedback from database
-    
-    return render_template("home.html")
+    return render_template("home.html", score=user_score)
 
 @app.route("/track", methods=['GET', 'POST'])
 def track():
