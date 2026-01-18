@@ -81,13 +81,14 @@ def track():
         last_meal_raw = request.form.get("last_meal")
         last_meal = datetime.fromisoformat(last_meal_raw).strftime("%Y-%m-%d %H:%M:%S")
         
-        # save to database
-        
         # call count_meal()
         num_meals = model.count_meals(session['user']['email'])
         
         # pass to score/feedback file
         
+        # save to database
+        
+        # redirect with score to pass into html 
         return redirect(url_for("home"))
     
     return render_template("track.html")
