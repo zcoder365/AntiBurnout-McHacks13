@@ -29,7 +29,10 @@ def signin():
         email = request.form.get("email")
         pw = request.form.get("password")
         
-        # verify user + log them in (set the session to them)
+        # verify user
+        
+        # create session for user
+        session['user'] = {'email': email}
         
         return redirect(url_for("home"))
     
@@ -59,8 +62,7 @@ def logout():
 def home():
     if 'user' not in session:
         return redirect(url_for('signin'))
-
-    user = session['user']
+    
     return render_template("home.html")
 
 @app.route("/track", methods=['GET', 'POST'])
