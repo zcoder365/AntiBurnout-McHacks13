@@ -41,11 +41,15 @@ def user_by_email(email):
     
     # convert sqlite3.Row to a regular dict so it can be used easily
     # and avoid binding errors when passing to other functions
-    return dict(user) if user else None
+    if user:
+        user_dict = dict(user)
+        return user_dict
+    else:
+        return None
 
 # Add daily input data for a user
 def add_daily_input(
-    user_id,
+    user_email,
     sleep_hours,
     mood,
     physical_activity,
@@ -58,14 +62,14 @@ def add_daily_input(
     conn = sqlite3.connect("burnout.db")
     cursor = conn.cursor()
     
-    # insert daily tracking data into the database
+    # insert daily tracking data into the database with user_email
     cursor.execute("""
         INSERT INTO daily_inputs
-        (user_id, sleep_hours, mood, physical_activity,
+        (user_email, sleep_hours, mood, physical_activity,
         cups_water, cups_caffeine, last_meal, score, created_at) VALUES
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
-        user_id,
+        user_email,
         sleep_hours,
         mood,
         physical_activity,
@@ -80,7 +84,7 @@ def add_daily_input(
     conn.close()
 
 # Find the number of meals logged by a user today
-def find_meals(user_id):
+def find_meals(user_email):
     # connect to the sqlite database
     conn = sqlite3.connect("burnout.db")
     cursor = conn.cursor()
@@ -89,8 +93,8 @@ def find_meals(user_id):
     cursor.execute("""
         SELECT COUNT(*) as today_count
         FROM daily_inputs
-        WHERE user_id = ? AND DATE(last_meal) = DATE('now')     
-    """, (user_id,))
+        WHERE user_email = ? AND DATE(last_meal) = DATE('now')     
+    """, (user_email,))
     
     # fetch the result from the query
     result = cursor.fetchone()
