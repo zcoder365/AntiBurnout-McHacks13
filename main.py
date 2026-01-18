@@ -2,7 +2,7 @@ from flask import Flask, redirect, url_for, session, render_template, request, f
 from flask_session import Session
 from datetime import datetime
 from dotenv import load_dotenv
-import bcrypt
+from werkzeug.security import generate_password_hash
 import os
 import model.model as model
 
@@ -43,8 +43,12 @@ def signin():
             # flash success message  
             flash("Login successful", "success")
                  
-            # create session for user
-            session['user'] = {'email': email}
+            # create session for user with burnout_score and feedback initialized
+            session['user'] = {
+                'email': email,
+                'burnout_score': 0,
+                'feedback': ""
+            }
         
             # redirect user to home page
             return redirect(url_for("home"))
@@ -63,14 +67,18 @@ def signup():
     if request.method == "POST":
         email = request.form.get("email")
         raw_pw = request.form.get("password")
-        # hash the user's password
-        hashed_pw = bcrypt.hashpw(raw_pw.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        # hash the user's password using werkzeug
+        hashed_pw = generate_password_hash(raw_pw)
         
         # save user to database
         db.add_user(email, hashed_pw)
         
-        # create session for user
-        session['user'] = {'email': email}
+        # create session for user with burnout_score and feedback initialized
+        session['user'] = {
+            'email': email,
+            'burnout_score': 0,
+            'feedback': ""
+        }
         
         return redirect(url_for("home"))
     
@@ -87,16 +95,11 @@ def home():
     if 'user' not in session:
         return redirect(url_for('signin'))
     
-    # get score from database
+    # get score and feedback from session
     user = session['user']
     email = user['email']
-    score = user['burnout_score']
-    feedback = user['feedback']
-    
-    if feedback == None:
-        feedback = ""
-    if score == None:
-        score = 0
+    score = user.get('burnout_score', 0)  # default to 0 if not found
+    feedback = user.get('feedback', "")    # default to empty string if not found
     
     return render_template("home.html", score=score, feedback=feedback)
 
