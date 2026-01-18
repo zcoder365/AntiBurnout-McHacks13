@@ -29,9 +29,6 @@ body {
     line-height: 1.6;
     min-height: 100vh;
     transition: background-color 0.5s ease; /* smooth transition for background color changes */
-    display: flex; /* use flexbox to center form */
-    justify-content: center; /* center horizontally */
-    align-items: center; /* center vertically */
 }
 
 /* navigation styling */
@@ -73,7 +70,7 @@ form {
     box-shadow: var(--shadow-lg);
     width: 100%;
     max-width: 500px;
-    margin: 0; /* remove margin since we're centering with flexbox */
+    margin: 3rem auto; /* center form horizontally */
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
