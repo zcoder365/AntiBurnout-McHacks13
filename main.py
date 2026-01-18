@@ -48,6 +48,9 @@ def signup():
         
         # save user to database
         
+        # create session for user
+        session['user'] = {'email': email}
+        
         return redirect(url_for("home"))
     
     return render_template("signup.html")
