@@ -44,8 +44,6 @@ def signup():
         email = request.form.get("email")
         raw_pw = request.form.get("password")
         
-        pw = "" # encrypt password
-        
         # save user to database
         
         # create session for user
