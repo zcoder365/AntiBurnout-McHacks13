@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, session, render_template, request
+from flask import Flask, redirect, url_for, session, render_template, request, flash
 from flask_session import Session
 from datetime import datetime
 from dotenv import load_dotenv
@@ -30,11 +30,23 @@ def signin():
         pw = request.form.get("password")
         
         # verify user
+        verified = model.verify_user(email, pw)
         
-        # create session for user
-        session['user'] = {'email': email}
+        if verified == True:
+            # flash success message  
+            flash("Login successful", "success")
+                 
+            # create session for user
+            session['user'] = {'email': email}
         
-        return redirect(url_for("home"))
+            # redirect user to home page
+            return redirect(url_for("home"))
+        else:
+            # flash error message
+            flash("Email or password incorrect", "error")
+            
+            # redirect user to sign up page
+            return redirect(url_for("signup"))
     
     return render_template("signin.html")
 
