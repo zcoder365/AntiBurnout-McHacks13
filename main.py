@@ -53,12 +53,12 @@ def signup():
 def logout():
     session.clear()
     
-    return redirect(url_for("login"))
+    return redirect(url_for("signin"))
 
 @app.route("/home")
 def home():
     if 'user' not in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('signin'))
 
     user = session['user']
     return render_template("home.html")
@@ -78,6 +78,8 @@ def track():
         
         # call count_meal()
         num_meals = model.count_meals(session['user']['email'])
+        
+        # pass to score/feedback file
         
         return redirect(url_for("home"))
     
