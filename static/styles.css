@@ -1,0 +1,84 @@
+/* dark grey, navy, light blue, red */
+/* more stable = light blue; more burnout = red */
+
+:root {
+    --primary-blue: #87CEEB;
+    --primary-red: #DC143C;
+    --dark-grey: #2C3E50;
+    --navy: #1A3A52;
+    --light-blue: #B0E0E6;
+    --muted-red: #C85A54;
+    --background: #F5F7FA;
+    --text-dark: #2C3E50;
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: var(--text-dark);
+    background-color: var(--background);
+}
+
+form {
+    background-color: var(--light-blue);
+    border: 1px solid var(--dark-grey);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px; /* Set a fixed width */
+    height: auto; /* Adjust height automatically */
+    margin: 50px auto; /* Center the form horizontally and add vertical margin */
+    display: flex; /* Use flexbox for centering */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center children horizontally */
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--dark-grey);
+    border-radius: 4px;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+    text-align: center;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+    border-color: var(--light-blue);
+    outline: none;
+}
+
+button, input[type="submit"] {
+    background-color: var(--primary-blue);
+    color: var(--navy);
+    border: 1px solid var(--navy);
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: var(--primary-red);
+}
+
+.stable {
+    color: var(--primary-blue);
+}
+
+.burnout {
+    color: var(--primary-red);
+}
+
+.burnout-gradient {
+    background: linear-gradient(90deg, var(--primary-blue) 0%, var(--light-blue) 25%, var(--muted-red) 75%, var(--primary-red) 100%);
+    height: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.burnout-indicator {
+    background: linear-gradient(90deg, var(--primary-blue) 0%, var(--light-blue) 25%, var(--muted-red) 75%, var(--primary-red) 100%);
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}

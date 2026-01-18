@@ -1,8 +1,9 @@
 from flask import Flask, redirect, url_for, session, render_template, request
 from flask_session import Session
-from authlib.integrations.flask_client import OAuth
+from datetime import datetime
 from dotenv import load_dotenv
 import os
+import model as model
 
 BASE_URL = "http://localhost:5002"
 
@@ -17,65 +18,79 @@ app.config['SECRET_KEY'] = 'secret'
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)  # initialize flask-session
 
-# ⚡ auth0 setup ======================================
-# pulled from Zoe's Auth0 account
-oauth = OAuth(app)
-auth0 = oauth.register(
-    'auth0',
-    client_id=os.environ['AUTH0_CLIENT_ID'],
-    client_secret=os.environ['AUTH0_SECRET_ID'],
-    api_base_url=f"https://{os.environ['AUTH0_DOMAIN']}",
-    access_token_url=f"https://{os.environ['AUTH0_DOMAIN']}/oauth/token",
-    authorize_url=f"https://{os.environ['AUTH0_DOMAIN']}/authorize",
-    client_kwargs={'scope': 'openid profile email'},
-)
-
 # ROUTES =============================================
 @app.route("/")
 def landing():
     return redirect(url_for("login"))
 
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    # return auth0.authorize_redirect(redirect_uri=f'{BASE_URL}/callback')
-    return redirect(url_for("home"))
-
-# @app.route("/signup", methods=['GET', 'POST'])
-# def signup():
-#     return ""
-
-@app.route("/callback")
-def callback():
-    token = auth0.authorize_access_token()
-    user = auth0.parse_id_token(token)
+@app.route("/signin", methods=['GET', 'POST'])
+def signin():
+    if request.method == "POST":
+        email = request.form.get("email")
+        pw = request.form.get("password")
+        
+        # verify user
+        
+        # create session for user
+        session['user'] = {'email': email}
+        
+        return redirect(url_for("home"))
     
-    # store the user in session
-    session['user'] = {
-        'id': user['sub'],    # unique auth0 id
-        'email': user['email'],
-        'name': user.get('name', '')
-    }
-    return redirect(url_for('dashboard'))
+    return render_template("signin.html")
+
+@app.route("/signup", methods=['GET', 'POST'])
+def signup():
+    if request.method == "POST":
+        email = request.form.get("email")
+        raw_pw = request.form.get("password")
+        
+        pw = "" # encrypt password
+        
+        # save user to database
+        
+        # create session for user
+        session['user'] = {'email': email}
+        
+        return redirect(url_for("home"))
+    
+    return render_template("signup.html")
 
 @app.route('/logout')
 def logout():
     session.clear()
     
-    return redirect(
-        f"https://{os.environ['AUTH0_DOMAIN']}/v2/logout?returnTo={BASE_URL}"
-    )
+    return redirect(url_for("signin"))
 
 @app.route("/home")
 def home():
-    # if 'user' not in session:
-    #     return redirect(url_for('login'))
-
-    # user = session['user']
-    # return f"Welcome {user['name']} ({user['email']})! Your burnout dashboard goes here."
+    if 'user' not in session:
+        return redirect(url_for('signin'))
+    
+    # get score from database
+    
     return render_template("home.html")
 
 @app.route("/track", methods=['GET', 'POST'])
 def track():
+    if request.method == "POST":
+        sleep = request.form.get("sleep")
+        mood = request.form.get("mood")
+        physical_activity = request.form.get("physical-activity")
+        water_intake = request.form.get("water")
+        caffeine_intake = request.form.get("caffeine")
+        last_meal_raw = request.form.get("last_meal")
+        last_meal = datetime.fromisoformat(last_meal_raw).strftime("%Y-%m-%d %H:%M:%S")
+        
+        # call count_meal()
+        num_meals = model.count_meals(session['user']['email'])
+        
+        # pass to score/feedback file
+        
+        # save to database
+        
+        # redirect with score to pass into html 
+        return redirect(url_for("home"))
+    
     return render_template("track.html")
 
 if __name__ == "__main__":
