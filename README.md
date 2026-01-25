@@ -177,6 +177,14 @@ Contributions are welcome! Please feel free to:
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request -->
 
+## 👥 Team & Contributions
+
+**Built at McHacks 13 by:**
+
+- **LAK-12** - Burnout score calculations and backend development
+- **lrcrv** - Database architecture and implementation  
+- **zcoder365** - Flask application (`main.py`), model functions, and frontend (HTML/CSS)
+
 ## 📝 License
 
 This project is open source and available under the MIT License.
