@@ -1,2 +1,2 @@
-# Anti-Burnout App
-A way to detect burnout before it happens.
+# McBurn
+A web app to detect burnout before it happens.
